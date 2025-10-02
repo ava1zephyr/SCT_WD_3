@@ -1,127 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TicTacToe Pro</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>TicTacToe</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
-    rel="stylesheet"
-  />
-  <script
-    type="module"
-    src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fanimetic7550back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.8"
-  ></script>
 </head>
 <body>
-  <div class="bg-grid"></div>
-  <div class="bg-glow"></div>
+  <header class="top">
+    <h1>TicTacToe <span class="smile">:)</span></h1>
+    <p class="subtitle">Play against a friend or the computer</p>
+  </header>
 
-  <div class="container">
-    <header class="topbar">
-      <div class="topbar-content">
-        <div class="logo-box">
-          <h1 class="title">
-            <span class="title-main">TicTacToe</span>
-            <span class="title-accent">:)</span>
-          </h1>
-          <p class="subtitle">Classic but clean</p>
-        </div>
+  <main class="container">
+    <div class="mode-select">
+      <button id="pvpBtn" class="">👥 1v1</button>
+      <button id="pvcBtn" class="active">🤖 vs Computer</button>
+    </div>
 
-        <div class="controls">
-          <div class="mode-switch">
-            <button id="pvp-mode" class="mode-btn">
-              <div class="btn-inner">
-                <span class="btn-icon">👥</span>
-                <span class="btn-label">1v1</span>
-              </div>
-            </button>
-            <button id="pvc-mode" class="mode-btn active">
-              <div class="btn-inner">
-                <span class="btn-icon">🤖</span>
-                <span class="btn-label">vs Computer</span>
-              </div>
-            </button>
-          </div>
+    <div class="names">
+      <input id="player1" placeholder="P1 Name" />
+      <div class="vs">vs</div>
+      <input id="player2" placeholder="Computer" disabled />
+    </div>
 
-          <div class="names">
-            <div class="input-box">
-              <input
-                type="text"
-                id="player-name"
-                placeholder="Enter name"
-                value="Player"
-                class="player-name"
-              />
-            </div>
-            <span class="vs-text">vs</span>
-            <div class="opponent-box">
-              <span id="opponent-name" class="opponent">Computer</span>
-            </div>
-          </div>
-        </div>
+    <div id="turnIndicator" class="turn">Player's Turn</div>
+
+    <div class="scoreboard">
+      <div class="score-card">
+        <div class="label" id="p1Name">P1 Name</div>
+        <div class="score" id="p1Score">0</div>
       </div>
-    </header>
 
-    <main class="main-area">
-      <div class="board-wrap">
-        <div class="status">
-          <div class="turn-box">
-            <div id="current-player" class="turn">
-              <div class="turn-dot"></div>
-              <span class="turn-text">Player's Turn</span>
-            </div>
-          </div>
+      <div class="score-sep">-</div>
 
-          <div class="scoreboard">
-            <div class="score player-score">
-              <div class="score-label">P1</div>
-              <div class="score-num" id="player-score">0</div>
-            </div>
-            <div class="score draw-score">
-              <div class="score-label">—</div>
-              <div class="score-num" id="draws">0</div>
-            </div>
-            <div class="score opponent-score">
-              <div class="score-label" id="opponent-icon">Computer</div>
-              <div class="score-num" id="opponent-score">0</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="board-container">
-          <div id="game-board" class="board"></div>
-        </div>
-
-        <div class="action-buttons">
-          <button id="reset-btn" class="action-btn reset">
-            <span class="btn-icon">↻</span>
-            <span class="btn-label">Reset</span>
-          </button>
-          <button id="new-game-btn" class="action-btn newgame">
-            <span class="btn-icon">+</span>
-            <span class="btn-label">New Game</span>
-          </button>
-        </div>
+      <div class="score-card">
+        <div class="label" id="p2Name">Bot</div>
+        <div class="score" id="p2Score">0</div>
       </div>
-    </main>
+    </div>
 
-    <div id="result-modal" class="overlay">
-      <div class="overlay-box">
-        <div id="result-icon" class="result-icon">🏆</div>
-        <h3 id="result-title" class="result-title">Victory!</h3>
-        <p id="result-message" class="result-msg">You won this match!</p>
-        <button id="continue-btn" class="continue-btn">
-          <span class="btn-label">Continue</span>
-        </button>
-      </div>
+    <div id="board" class="board" aria-label="tic tac toe board"></div>
+
+    <div class="controls">
+      <button id="resetBtn" class="green">↺ Reset</button>
+      <button id="newGameBtn" class="orange">+ New Game</button>
+    </div>
+  </main>
+
+  <div id="popup" aria-hidden="true">
+    <div id="popupContent">
+      <h2 id="popupTitle">Winner!</h2>
+      <p id="popupTagline">You crushed it 😎</p>
+      <button id="closePopup">OK</button>
     </div>
   </div>
 
   <script src="script.js"></script>
-  <script id="dhws-dataInjector" src="/public/dhws-data-injector.js"></script>
 </body>
 </html>
