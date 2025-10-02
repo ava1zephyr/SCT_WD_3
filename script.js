@@ -1,4 +1,4 @@
-// -------- get elements --------
+// DOM elements
 const boardEl = document.getElementById("board");
 const pvpBtn = document.getElementById("pvpBtn");
 const pvcBtn = document.getElementById("pvcBtn");
@@ -12,13 +12,12 @@ const p2ScoreEl = document.getElementById("p2Score");
 const resetBtn = document.getElementById("resetBtn");
 const newGameBtn = document.getElementById("newGameBtn");
 
-// Popup elements (must exist in HTML)
+// Popup elements
 const popup = document.getElementById("popup");
 const popupTitle = document.getElementById("popupTitle");
 const popupTagline = document.getElementById("popupTagline");
 const closePopup = document.getElementById("closePopup");
 
-// -------- game state --------
 let gameMode = "pvc"; // "pvc" or "pvp"
 let board = Array(9).fill("");
 let currentPlayer = "X";
@@ -39,7 +38,7 @@ const loseTaglines = [
   "Better luck next time! 💔"
 ];
 
-// -------- helper utilities --------
+
 const WIN_PATTERNS = [
   [0,1,2],[3,4,5],[6,7,8],
   [0,3,6],[1,4,7],[2,5,8],
@@ -92,7 +91,7 @@ function handleMove(e) {
 }
 
 function computerMove() {
-  // --- unbeatable AI using minimax ---
+  //AI using minimax
   const bestMove = findBestMove(board);
   if (bestMove === null) return;
 
@@ -170,12 +169,12 @@ function newRound() {
   createBoard();
   gameActive = true;
   currentPlayer = "X";
-  // ensure names UI is synced
+  
   updateUINames();
   updateTurnIndicator();
 }
 
-// -------- popup logic --------
+// popup logic
 function showPopup(winnerName) {
   popupTitle.textContent = `${winnerName} Wins!`;
 
@@ -189,7 +188,6 @@ function showPopup(winnerName) {
   popupTagline.textContent = taglinePool[Math.floor(Math.random() * taglinePool.length)];
   popup.setAttribute("aria-hidden", "false");
   popup.classList.add("visible");
-  // keep scores displayed already updated
 }
 
 function showDraw() {
@@ -207,7 +205,6 @@ if (closePopup) {
   });
 }
 
-// -------- UI & mode handling --------
 function updateUINames(){
   p1NameEl.textContent = player1Input.value.trim() || "P1";
   if (gameMode === "pvp") {
@@ -222,7 +219,7 @@ pvpBtn.addEventListener("click", () => {
   pvpBtn.classList.add("active");
   pvcBtn.classList.remove("active");
   player2Input.disabled = false;
-  player2Input.placeholder = "P2";
+  player2Input.placeholder = "P2 Name";
   p2NameEl.textContent = player2Input.value.trim() || "P2";
   resetGame();
 });
@@ -252,7 +249,7 @@ player2Input.addEventListener("input", () => {
   }
 });
 
-// -------- AI FUNCTIONS (minimax) --------
+// AI (minimax)
 function evaluate(b) {
   for (let [a, b2, c] of WIN_PATTERNS) {
     if (b[a] && b[a] === b[b2] && b[a] === b[c]) {
@@ -314,7 +311,6 @@ function findBestMove(b) {
   return bestMove;
 }
 
-// -------- init --------
 createBoard();
 p1ScoreEl.textContent = scores.p1;
 p2ScoreEl.textContent = scores.p2;
