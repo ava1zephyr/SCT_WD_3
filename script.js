@@ -67,6 +67,7 @@ function handleMove(e) {
   const cell = boardEl.children[index];
   cell.textContent = currentPlayer;
   cell.classList.add("filled");
+  cell.classList.add(currentPlayer === "X" ? "x-mark" : "o-mark");
 
   if (checkWin(currentPlayer)) {
     gameActive = false;
@@ -98,7 +99,7 @@ function computerMove() {
   board[bestMove] = "O";
   const cell = boardEl.children[bestMove];
   cell.textContent = "O";
-  cell.classList.add("filled");
+  cell.classList.add("filled", "o-mark");
 
   if (checkWin("O")) {
     gameActive = false;
